@@ -1,0 +1,161 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #F4EBD7;
+  --color-paper-deep: #ECE1C6;
+  --color-ink: #1A1612;
+  --color-ink-soft: #3a342c;
+  --color-accent: #B0331E;
+  --color-accent-deep: #7a1f10;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-hindi: 'Noto Serif Devanagari', serif;
+  --font-bebas: 'Bebas Neue', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  overflow-x: hidden;
+}
+
+/* Grain texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(26,22,18,.04) 0, transparent 2px),
+    radial-gradient(circle at 70% 60%, rgba(26,22,18,.03) 0, transparent 2px),
+    radial-gradient(circle at 40% 80%, rgba(26,22,18,.04) 0, transparent 2px);
+  background-size: 8px 8px, 13px 13px, 11px 11px;
+  pointer-events: none;
+  opacity: .7;
+  z-index: 0;
+}
+
+/* Ticker */
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.ticker-track { animation: ticker 42s linear infinite; }
+
+/* Roach float */
+@keyframes roach-float {
+  0%, 100% { transform: rotate(-15deg) translateY(0); }
+  50%      { transform: rotate(10deg) translateY(-20px); }
+}
+.roach-float { animation: roach-float 6s ease-in-out infinite; }
+
+/* Squish */
+@keyframes squish {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.4, 0.4) rotate(20deg); }
+  100% { transform: scale(0); opacity: 0; }
+}
+.squished { animation: squish .3s ease forwards; }
+
+/* Shake */
+@keyframes shake {
+  0%, 100%   { transform: translateX(0); }
+  20%, 60%   { transform: translateX(-8px); }
+  40%, 80%   { transform: translateX(8px); }
+}
+.shake { animation: shake .4s ease; }
+
+/* Scroll reveal */
+.sr { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+.sr.visible { opacity: 1; transform: translateY(0); }
+.sr-delay-1 { transition-delay: .1s; }
+.sr-delay-2 { transition-delay: .2s; }
+.sr-delay-3 { transition-delay: .3s; }
+.sr-delay-4 { transition-delay: .4s; }
+.sr-delay-5 { transition-delay: .5s; }
+
+/* Drop cap */
+.dropcap::first-letter {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 52px;
+  float: left;
+  line-height: .85;
+  padding: 4px 10px 0 0;
+  color: var(--color-accent);
+}
+
+/* Section z stacking */
+section { position: relative; z-index: 1; }
+
+/* Custom utilities */
+.nav-link {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--color-paper);
+  opacity: .7;
+  text-decoration: none;
+  padding: 14px 16px;
+  transition: opacity .2s, background .2s;
+  border-left: 1px solid rgba(255,255,255,.08);
+  cursor: pointer;
+}
+.nav-link:hover { opacity: 1; background: rgba(176,51,30,.2); }
+.nav-link.active { opacity: 1; color: var(--color-accent); }
+
+/* Expose page */
+.expose-body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+.expose-dark {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+/* Cinematic quote */
+.cinema-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+/* Tag badges */
+.tag-fact      { background: #1a3d2a; color: #c9e8d4; }
+.tag-allegation{ background: #5a4514; color: #f5e1a8; }
+.tag-unverified{ background: #4a2020; color: #f0c2c2; }
+
+/* Source citation superscript */
+.cite {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.6em;
+  vertical-align: super;
+  color: var(--color-accent);
+  cursor: pointer;
+  padding: 0 2px;
+  font-weight: 600;
+}
+.cite:hover { text-decoration: underline; }
+
+/* Network graph */
+.node-pulse {
+  filter: drop-shadow(0 0 10px rgba(176,51,30,.5));
+}
+
+/* About responsive */
+@media (max-width: 960px) {
+  .about-inner {
+    grid-template-columns: 1fr !important;
+  }
+  .about-graphic {
+    display: none !important;
+  }
+}
