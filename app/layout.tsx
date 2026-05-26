@@ -1,37 +1,74 @@
 import type { Metadata, Viewport } from "next";
+import JsonLd from "@/components/JsonLd";
+import { absoluteUrl, siteConfig } from "@/lib/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Anti-Cockroach Janta Party · The Opposition",
-  description: "A political counter-movement for citizens who pick up the broom. Five principles. Zero excuses.",
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: `${siteConfig.name} · ${siteConfig.tagline}`,
+    template: `%s · ${siteConfig.shortName}`,
+  },
+  description: siteConfig.description,
+  keywords: [...siteConfig.keywords],
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  applicationName: siteConfig.shortName,
+  category: "Politics",
+  referrer: "origin-when-cross-origin",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: "/ajcp-logo.png",
     shortcut: "/ajcp-logo.png",
     apple: "/ajcp-logo.png",
   },
   openGraph: {
-    title: "Anti-Cockroach Janta Party · The Opposition",
-    description: "A political counter-movement for citizens who pick up the broom. Five principles. Zero excuses.",
+    type: "website",
+    locale: siteConfig.locale,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: `${siteConfig.name} · ${siteConfig.tagline}`,
+    description: siteConfig.description,
     images: [
       {
-        url: "/ajcp-logo.png",
+        url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: "Anti-Cockroach Janta Party logo",
+        alt: `${siteConfig.name} logo`,
       },
     ],
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Anti-Cockroach Janta Party · The Opposition",
-    description: "A political counter-movement for citizens who pick up the broom. Five principles. Zero excuses.",
-    images: ["/ajcp-logo.png"],
+    title: `${siteConfig.name} · ${siteConfig.tagline}`,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
   },
 };
 
 export const viewport: Viewport = {
   themeColor: "#F4EBD7",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -45,7 +82,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <JsonLd />
+        {children}
+      </body>
     </html>
   );
 }
